@@ -5,7 +5,7 @@
          height/1,
          trees/1,
          difficulty/1,
-         set_nonce/2,
+         set_nonce/3,
          new/3,
          to_header/1,
          serialize_for_network/1,
@@ -40,8 +40,12 @@ trees(Block) ->
 difficulty(Block) ->
     Block#block.difficulty.
 
-set_nonce(Block, Nonce) ->
-    Block#block{nonce = Nonce}.
+%% Sets the evidence of PoW,too,  for Cuckoo Cycle
+set_nonce(Block, Nonce, no_value) ->
+    Block#block{nonce = Nonce};
+set_nonce(Block, Nonce, Evd) ->
+    Block#block{nonce = Nonce,
+                pow_evidence = Evd}.
 
 -spec new(block(), list(signed_tx()), trees()) -> {ok, block()} | {error, term()}.
 new(LastBlock, Txs, Trees0) ->
@@ -69,13 +73,15 @@ to_header(#block{height = Height,
                  difficulty = Difficulty,
                  nonce = Nonce,
                  time = Time,
-                 version = Version}) ->
+                 version = Version,
+                 pow_evidence = Evd}) ->
     #header{height = Height,
             prev_hash = PrevHash,
             root_hash = RootHash,
             difficulty = Difficulty,
             nonce = Nonce,
             time = Time,
+            pow_evidence = Evd,
             version = Version}.
 
 -spec serialize_for_network(BlockInternalRepresentation) ->
