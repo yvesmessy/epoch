@@ -4,6 +4,7 @@
 -export([prev_hash/1,
          height/1,
          difficulty/1,
+         nonce/1,
          time_in_secs/1,
          serialize_for_network/1,
          deserialize_from_network/1,
@@ -25,6 +26,8 @@ height(Header) ->
 
 difficulty(Header) ->
     Header#header.difficulty.
+nonce(Header) ->
+    Header#header.nonce.
 
 time_in_secs(Header) ->
     Time = Header#header.time,
