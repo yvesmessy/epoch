@@ -11,7 +11,7 @@
           root_hash = <<>>       :: binary(), % Hash of all state Merkle trees included in #block.trees
           trees = #trees{}       :: trees(),
           txs = []               :: list(),
-          difficulty = 0         :: non_neg_integer(),
+          difficulty = 1         :: pos_integer(),
           nonce = 0              :: non_neg_integer(),
           time = 0               :: non_neg_integer(),
           version = 0            :: non_neg_integer()}).
@@ -21,7 +21,7 @@
           height = 0             :: height(),
           prev_hash = <<0:?BLOCK_HEADER_HASH_BYTES/unit:8>> :: block_header_hash(),
           root_hash = <<>>       :: binary(),
-          difficulty = 0         :: non_neg_integer(),
+          difficulty = 1         :: pos_integer(), %% TODO Review meaning of field: meant to be linear representation of expected average amount of work for mining block header.
           nonce = 0              :: non_neg_integer(),
           time = 0               :: non_neg_integer(),
           version = 0            :: non_neg_integer()}).
